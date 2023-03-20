@@ -17,6 +17,7 @@ namespace Maze {
                     Console.WriteLine("File symbols can only be X, R, K, and T");
                 } else {
                     Console.WriteLine("File is valid.");
+                    MatrixElement[][] mainMatrix = ut.InitMatrix(jag);
                     // the rest of the BFS, DFS code
                 }
             } catch (Exception e) {

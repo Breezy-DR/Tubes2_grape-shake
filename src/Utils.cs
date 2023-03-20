@@ -53,5 +53,18 @@ namespace Maze {
                 return true;
             }
         }
+
+        public MatrixElement[][] InitMatrix(string[][] jag) {
+            MatrixElement[][] init = new MatrixElement[jag.Length][];
+            for (int i = 0; i < jag.Length; i++) {
+                init[i] = new MatrixElement[jag[0].Length];
+            }
+            for (int i=0; i < init.Length; i++) {
+                for (int j=0; j < init[i].Length; j++) {
+                    init[i][j] = new MatrixElement(jag[i][j], 0);
+                }
+            }
+            return init;
+        }
     }
 }

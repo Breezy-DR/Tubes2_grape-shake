@@ -66,5 +66,17 @@ namespace Maze {
             }
             return init;
         }
+
+        public int ElementCount(string[][] jag, string elmt) {
+            int count = 0;
+            for (int i=0; i < jag.Length; i++) {
+                for (int j=0; j < jag[i].Length; j++) {
+                    if (jag[i][j] == elmt) {
+                        count += 1;
+                    }
+                }
+            }
+            return count;
+        } 
     }
 }

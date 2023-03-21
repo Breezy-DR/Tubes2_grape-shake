@@ -56,6 +56,19 @@ namespace Maze {
                 return true;
             }
         }
+        public bool stuck(MatrixElement[][] mainMatrix, bool[,] isVisited, int x, int y) {
+            return ((!canMoveDown(mainMatrix, x, y) && !canMoveUp(mainMatrix, x, y) && !canMoveRight(mainMatrix, x, y) && canMoveLeft(mainMatrix, x, y) && isVisited[x, y-1])
+            || (!canMoveDown(mainMatrix, x, y) && !canMoveUp(mainMatrix, x, y) && canMoveRight(mainMatrix, x, y) && !canMoveLeft(mainMatrix, x, y) && isVisited[x, y+1]) ||
+            (!canMoveDown(mainMatrix, x, y) && canMoveUp(mainMatrix, x, y) && !canMoveRight(mainMatrix, x, y) && !canMoveLeft(mainMatrix, x, y) && isVisited[x-1, y]) ||
+            (canMoveDown(mainMatrix, x, y) && !canMoveUp(mainMatrix, x, y) && !canMoveRight(mainMatrix, x, y) && !canMoveLeft(mainMatrix, x, y) && isVisited[x+1, y]));
+        }
+
+        public bool isAdjacentToUnvisited(MatrixElement[][] mainMatrix, bool[,] isVisited, int x, int y) {
+            return ((canMoveDown(mainMatrix, x, y) && !isVisited[x+1, y]) ||
+            (canMoveUp(mainMatrix, x, y) && !isVisited[x-1, y]) ||
+            (canMoveRight(mainMatrix, x, y) && !isVisited[x, y+1]) ||
+            (canMoveLeft(mainMatrix, x, y) && !isVisited[x, y-1]));
+        }
 
         
 
@@ -77,10 +90,11 @@ namespace Maze {
                         continue;
                     }
                 }
-                isVisited[x, y] = true;
-                if (jag[x][y] == "T") {
+                if (jag[x][y] == "T" && !isVisited[x, y]) {
                     countTreasure += 1;
                 }
+                isVisited[x, y] = true;
+                mainMatrix[x][y].numberOfVisits += 1;
                 dfslist.Add(temp);
                 for (int i=0; i < 4; i++) {
                     if (i == 0 && !(canMoveLeft(mainMatrix, x, y))) {
@@ -99,6 +113,22 @@ namespace Maze {
                 }
                 if (countTreasure == ut.ElementCount(jag, "T")) {
                     break;
+                }
+                else {
+                    if (stuck(mainMatrix, isVisited, x, y)) {
+                        // foreach (var a in dfslist) {
+                        //     Console.WriteLine(a);
+                        // }
+                        List<Tuple<int, int>> reverse = Enumerable.Reverse(dfslist).ToList();
+                        // foreach (var b in reverse) {
+                        //     Console.WriteLine(b);
+                        // }
+                        int i = 0;
+                        do {
+                            dfslist.Add(reverse[i+1]);
+                            i++;
+                        } while (!isAdjacentToUnvisited(mainMatrix, isVisited, reverse[i].Item1, reverse[i].Item2));
+                    }
                 }
             }
             return dfslist;

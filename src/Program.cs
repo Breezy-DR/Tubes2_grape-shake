@@ -10,7 +10,7 @@ namespace Maze {
                 // filename = Console.ReadLine();
                 Utils ut = new Utils();
                 DFS dfs = new DFS();
-                string[][] jag = ut.ReadFile("sampel-2.txt");
+                string[][] jag = ut.ReadFile("sampel-6.txt");
                 ut.printMatrix(jag);
                 if (!ut.isLineHaveEqualElement(jag)) {
                     Console.WriteLine("All lines have to have the same number of elements");

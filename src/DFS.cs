@@ -63,6 +63,14 @@ namespace Maze {
             (canMoveDown(mainMatrix, x, y) && !canMoveUp(mainMatrix, x, y) && !canMoveRight(mainMatrix, x, y) && !canMoveLeft(mainMatrix, x, y) && isVisited[x+1, y]));
         }
 
+        public bool surroundedByVisited(MatrixElement[][] mainMatrix, bool[,] isVisited, int x, int y) {
+            return ((!canMoveDown(mainMatrix, x, y) && !canMoveRight(mainMatrix, x, y) && canMoveLeft(mainMatrix, x, y) && canMoveUp(mainMatrix, x, y) && isVisited[x, y-1] && isVisited[x-1, y])
+            || (!canMoveUp(mainMatrix, x, y) && !canMoveRight(mainMatrix, x, y) && canMoveLeft(mainMatrix, x, y) && canMoveDown(mainMatrix, x, y) && isVisited[x, y-1] && isVisited[x+1, y])
+            || (canMoveUp(mainMatrix, x, y) && canMoveRight(mainMatrix, x, y) && !canMoveLeft(mainMatrix, x, y) && !canMoveDown(mainMatrix, x, y) && isVisited[x, y+1] && isVisited[x-1, y])
+            || (!canMoveUp(mainMatrix, x, y) && canMoveRight(mainMatrix, x, y) && !canMoveLeft(mainMatrix, x, y) && canMoveDown(mainMatrix, x, y) && isVisited[x, y+1] && isVisited[x+1, y])
+            );
+        }
+
         public bool isAdjacentToUnvisited(MatrixElement[][] mainMatrix, bool[,] isVisited, int x, int y) {
             return ((canMoveDown(mainMatrix, x, y) && !isVisited[x+1, y]) ||
             (canMoveUp(mainMatrix, x, y) && !isVisited[x-1, y]) ||
@@ -115,7 +123,7 @@ namespace Maze {
                     break;
                 }
                 else {
-                    if (stuck(mainMatrix, isVisited, x, y)) {
+                    if (stuck(mainMatrix, isVisited, x, y) || surroundedByVisited(mainMatrix, isVisited, x, y)) {
                         // foreach (var a in dfslist) {
                         //     Console.WriteLine(a);
                         // }

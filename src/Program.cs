@@ -4,12 +4,13 @@ using System.Collections.Generic;
 namespace Maze {
     class Program {
         static void Main(string[] args) {
-            try {
-                string filename;
-                Console.Write("Masukkan nama file: ");
-                filename = Console.ReadLine();
+            // try {
+                // string filename;
+                // Console.Write("Masukkan nama file: ");
+                // filename = Console.ReadLine();
                 Utils ut = new Utils();
-                string[][] jag = ut.ReadFile(filename);
+                DFS dfs = new DFS();
+                string[][] jag = ut.ReadFile("sampel-5.txt");
                 ut.printMatrix(jag);
                 if (!ut.isLineHaveEqualElement(jag)) {
                     Console.WriteLine("All lines have to have the same number of elements");
@@ -22,12 +23,27 @@ namespace Maze {
                     Console.WriteLine("File has to have exactly one symbol of K, and at least one symbol of R, T, and X.");
                 } else {
                     Console.WriteLine("File is valid.");
+                    int krustyKrabX = 0;
+                    int krustyKrabY = 0;
+                    for (int i=0; i < jag.Length; i++) {
+                        for (int j=0; j < jag[i].Length; j++) {
+                            if (jag[i][j] == "K") {
+                                krustyKrabX = i;
+                                krustyKrabY = j;
+                                break;
+                            }
+                        }
+                    }
                     MatrixElement[][] mainMatrix = ut.InitMatrix(jag);
-                    // the rest of the BFS, DFS code
+                    bool[,] isVisited = ut.InitBoolMatrix(jag);
+                    List<Tuple<int, int>> dfslist = dfs.findDFS(mainMatrix, isVisited, jag, krustyKrabX, krustyKrabY);
+                    foreach (var tuple in dfslist) {
+                        Console.WriteLine("({0}, {1})", tuple.Item1.ToString(), tuple.Item2.ToString());
+                    }
                 }
-            } catch (Exception e) {
-                Console.WriteLine(e.Message);
-            }
+            // } catch (Exception e) {
+            //     Console.WriteLine(e.Message);
+            // }
         }
     }
 }

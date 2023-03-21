@@ -67,6 +67,16 @@ namespace Maze {
             return init;
         }
 
+        public bool[,] InitBoolMatrix(string[][] jag) {
+            bool [,] isVisited = new bool[jag.Length, jag[0].Length];
+            for (int i=0; i < jag.Length; i++) {
+                for (int j = 0; j < jag[i].Length; j++) {
+                    isVisited[i, j] = false;
+                }
+            }
+            return isVisited;
+        }
+
         public int ElementCount(string[][] jag, string elmt) {
             int count = 0;
             for (int i=0; i < jag.Length; i++) {

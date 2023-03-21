@@ -65,7 +65,7 @@ namespace Maze {
             int countTreasure = 0;
             Tuple<int, int> init = new Tuple<int, int>(x, y);
             s.Push(init);
-            while (s.Count > 0 || countTreasure == ut.ElementCount(jag, "T")) {
+            while (true) {
                 Tuple<int, int> temp = s.Peek();
                 s.Pop();
                 x = temp.Item1;
@@ -78,7 +78,7 @@ namespace Maze {
                     }
                 }
                 isVisited[x, y] = true;
-                if (mainMatrix[x][y].symbol == "T") {
+                if (jag[x][y] == "T") {
                     countTreasure += 1;
                 }
                 dfslist.Add(temp);
@@ -96,6 +96,9 @@ namespace Maze {
                         continue;
                     }
                     s.Push(new Tuple<int, int>(x + horizontal[i], y + vertical[i]));
+                }
+                if (countTreasure == ut.ElementCount(jag, "T")) {
+                    break;
                 }
             }
             return dfslist;

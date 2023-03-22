@@ -35,12 +35,13 @@ namespace Maze {
                             }
                         }
                     }
-                    MatrixElement[][] mainMatrix = ut.InitMatrix(jag);
-                    bool[,] isVisited = ut.InitBoolMatrix(jag);
-                /*                    List<Tuple<int, int>> dfslist = dfs.findDFS(mainMatrix, isVisited, jag, krustyKrabX, krustyKrabY);
-                                    foreach (var tuple in dfslist) {
-                                        Console.WriteLine("({0}, {1})", tuple.Item1.ToString(), tuple.Item2.ToString());
-                                    }*/
+                MatrixElement[][] mainMatrix = ut.InitMatrix(jag);
+                bool[,] isVisited = ut.InitBoolMatrix(jag);
+                List<Tuple<int, int>> dfslist = dfs.findDFS(mainMatrix, isVisited, jag, krustyKrabX, krustyKrabY);
+                foreach (var tuple in dfslist)
+                {
+                    Console.WriteLine("({0}, {1})", tuple.Item1.ToString(), tuple.Item2.ToString());
+                }
                 BFS a = new BFS();
                 Tuple<List<Tuple<int, int, int, int>>, List<Tuple<int, int>>> bfsList = a.findBFS(mainMatrix, jag, krustyKrabX, krustyKrabY);
                 Console.WriteLine("Jalur:");

@@ -21,6 +21,7 @@ namespace Maze {
             }
             List<Tuple<int, int>> solutionPath = findPath(bfsProcess, x, y, startX, startY);
             Tuple<List<Tuple<int, int, int, int>>, List<Tuple<int, int>>> bfsList = new Tuple<List<Tuple<int, int, int, int>>, List<Tuple<int, int>>>(bfsProcess, solutionPath);
+            ut.resetMainMatrix(treasureMap);
             return bfsList;
         }
 

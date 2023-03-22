@@ -159,5 +159,13 @@ namespace Maze {
                 }
             }
         }
+
+        public void resetMainMatrix(MatrixElement[][] mainMatrix) {
+            for (int i = 0; i < mainMatrix.Length; i++) {
+                for (int j = 0; j < mainMatrix[0].Length; j++) {
+                    mainMatrix[i][j].numberOfVisits = 0;
+                }
+            }
+        }
     }
 }

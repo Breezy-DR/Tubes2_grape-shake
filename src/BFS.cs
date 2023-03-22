@@ -4,6 +4,7 @@ using System.Collections.Generic;
 namespace Maze {
     class BFS {
         public Tuple<List<Tuple<int, int, int, int>>, List<Tuple<int, int>>> findBFS(MatrixElement[][] treasureMap, string[][] jag, int x, int y) {
+            /* Menghasilkan list process BFS secara keseluruhan dan list path dari titik start sampai ke treasure terakhir */
             List<Tuple<int, int, int, int>> bfsProcess = new List<Tuple<int, int, int, int>>();
             Tuple<int, int, List<Tuple<int, int, int, int>>> sub_solution;
             Utils ut = new Utils();
@@ -24,6 +25,8 @@ namespace Maze {
         }
 
         private Tuple<int, int, List<Tuple<int, int, int, int>>> findSubBFS(MatrixElement[][] treasureMap, string[][] jag, int x, int y) {
+            /* Fungsi BFS untuk satu tujuan (dari (x,y) ke treasure berikutnya). 
+               Menghasilkan koordinat treasure dan list process untuk koordinat yang dicek menggunakan BFS */
             bool found = false;
             Utils ut = new Utils();
             bool[,] isVisited = ut.InitBoolMatrix(jag);
@@ -41,6 +44,7 @@ namespace Maze {
                 prevX = bfsQueue.Peek().Item3;
                 prevY = bfsQueue.Peek().Item4;
                 bfsQueue.Dequeue();
+
                 if (!isVisited[currentX, currentY]) {
                     isVisited[currentX, currentY] = true;
                     bfsProcess.Add(new Tuple<int, int, int, int>(currentX, currentY, prevX, prevY));
@@ -70,6 +74,8 @@ namespace Maze {
         }
 
         private List<Tuple<int, int>> findPath(List<Tuple<int, int, int, int>> bfsProcess, int x, int y, int startX, int startY) {
+            /* Fungsi untuk mencari path dari list process. 
+               Menghasilkan list path dari titik start sampai ke treasure terakhir */
             List<Tuple<int, int>> path = new List<Tuple<int, int>>();
             int i = bfsProcess.Count - 1;
 

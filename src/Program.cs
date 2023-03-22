@@ -51,7 +51,8 @@ namespace Maze {
                 Console.WriteLine("Proses:");
                 foreach (var tuple in bfsList.Item1)
                 {
-                    Console.WriteLine("({0}, {1}) , ({2}, {3})", tuple.Item1.ToString(), tuple.Item2.ToString(), tuple.Item3.ToString(), tuple.Item4.ToString());
+                    // Prosesnya cukup pake Item1 dan Item2
+                    Console.WriteLine("({0}, {1})", tuple.Item1.ToString(), tuple.Item2.ToString());
                 }
             }
             // } catch (Exception e) {

@@ -16,70 +16,7 @@ namespace Maze {
             }
             return true;
         }
-        public bool canMoveRight(MatrixElement[][] mainMatrix, int x, int y) {
-            // return (!(mainMatrix[x][y+1].symbol == "X" || y == mainMatrix[0].Length - 1));
-            if (y == mainMatrix[0].Length - 1) {
-                return false;
-            } else if (mainMatrix[x][y+1].symbol == "X") {
-                return false;
-            } else {
-                return true;
-            }
-        }
-        public bool canMoveLeft(MatrixElement[][] mainMatrix, int x, int y) {
-            // return (!(mainMatrix[x][y-1].symbol == "X" || y == 0));
-            if (y == 0) {
-                return false;
-            } else if (mainMatrix[x][y-1].symbol == "X") {
-                return false;
-            } else {
-                return true;
-            }
-        }
-        public bool canMoveUp(MatrixElement[][] mainMatrix, int x, int y) {
-            // return (!(mainMatrix[x-1][y].symbol == "X" || x == 0));
-            if (x == 0) {
-                return false;
-            } else if (mainMatrix[x-1][y].symbol == "X") {
-                return false;
-            } else {
-                return true;
-            }
-        }
-        public bool canMoveDown(MatrixElement[][] mainMatrix, int x, int y) {
-            // return (!(mainMatrix[x+1][y].symbol == "X" || x == mainMatrix.Length - 1));
-            if (x == mainMatrix.Length - 1) {
-                return false;
-            } else if (mainMatrix[x+1][y].symbol == "X") {
-                return false;
-            } else {
-                return true;
-            }
-        }
-        public bool stuck(MatrixElement[][] mainMatrix, bool[,] isVisited, int x, int y) {
-            return ((!canMoveDown(mainMatrix, x, y) && !canMoveUp(mainMatrix, x, y) && !canMoveRight(mainMatrix, x, y) && canMoveLeft(mainMatrix, x, y) && isVisited[x, y-1])
-            || (!canMoveDown(mainMatrix, x, y) && !canMoveUp(mainMatrix, x, y) && canMoveRight(mainMatrix, x, y) && !canMoveLeft(mainMatrix, x, y) && isVisited[x, y+1]) ||
-            (!canMoveDown(mainMatrix, x, y) && canMoveUp(mainMatrix, x, y) && !canMoveRight(mainMatrix, x, y) && !canMoveLeft(mainMatrix, x, y) && isVisited[x-1, y]) ||
-            (canMoveDown(mainMatrix, x, y) && !canMoveUp(mainMatrix, x, y) && !canMoveRight(mainMatrix, x, y) && !canMoveLeft(mainMatrix, x, y) && isVisited[x+1, y]));
-        }
-
-        public bool surroundedByVisited(MatrixElement[][] mainMatrix, bool[,] isVisited, int x, int y) {
-            return ((!canMoveDown(mainMatrix, x, y) && !canMoveRight(mainMatrix, x, y) && canMoveLeft(mainMatrix, x, y) && canMoveUp(mainMatrix, x, y) && isVisited[x, y-1] && isVisited[x-1, y])
-            || (!canMoveUp(mainMatrix, x, y) && !canMoveRight(mainMatrix, x, y) && canMoveLeft(mainMatrix, x, y) && canMoveDown(mainMatrix, x, y) && isVisited[x, y-1] && isVisited[x+1, y])
-            || (canMoveUp(mainMatrix, x, y) && canMoveRight(mainMatrix, x, y) && !canMoveLeft(mainMatrix, x, y) && !canMoveDown(mainMatrix, x, y) && isVisited[x, y+1] && isVisited[x-1, y])
-            || (!canMoveUp(mainMatrix, x, y) && canMoveRight(mainMatrix, x, y) && !canMoveLeft(mainMatrix, x, y) && canMoveDown(mainMatrix, x, y) && isVisited[x, y+1] && isVisited[x+1, y])
-            );
-        }
-
-        public bool isAdjacentToUnvisited(MatrixElement[][] mainMatrix, bool[,] isVisited, int x, int y) {
-            return ((canMoveDown(mainMatrix, x, y) && !isVisited[x+1, y]) ||
-            (canMoveUp(mainMatrix, x, y) && !isVisited[x-1, y]) ||
-            (canMoveRight(mainMatrix, x, y) && !isVisited[x, y+1]) ||
-            (canMoveLeft(mainMatrix, x, y) && !isVisited[x, y-1]));
-        }
-
         
-
         public List<Tuple<int, int>> findDFS(MatrixElement[][] mainMatrix, bool[,] isVisited, string[][] jag, int x, int y) {
             List<Tuple<int, int>> dfslist = new List<Tuple<int, int>>();
             Stack<Tuple<int, int>> s = new Stack<Tuple<int, int>>();
@@ -105,16 +42,16 @@ namespace Maze {
                 mainMatrix[x][y].numberOfVisits += 1;
                 dfslist.Add(temp);
                 for (int i=0; i < 4; i++) {
-                    if (i == 0 && !(canMoveLeft(mainMatrix, x, y))) {
+                    if (i == 0 && !(ut.canMoveLeft(mainMatrix, x, y))) {
                         continue;
                     }
-                    if (i == 1 && !(canMoveRight(mainMatrix, x, y))) {
+                    if (i == 1 && !(ut.canMoveRight(mainMatrix, x, y))) {
                         continue;
                     }
-                    if (i == 2 && !(canMoveUp(mainMatrix, x, y))) {
+                    if (i == 2 && !(ut.canMoveUp(mainMatrix, x, y))) {
                         continue;
                     }
-                    if (i == 3 && !(canMoveDown(mainMatrix, x, y))) {
+                    if (i == 3 && !(ut.canMoveDown(mainMatrix, x, y))) {
                         continue;
                     }
                     s.Push(new Tuple<int, int>(x + horizontal[i], y + vertical[i]));
@@ -123,7 +60,7 @@ namespace Maze {
                     break;
                 }
                 else {
-                    if (stuck(mainMatrix, isVisited, x, y) || surroundedByVisited(mainMatrix, isVisited, x, y)) {
+                    if (ut.stuck(mainMatrix, isVisited, x, y) || ut.surroundedByVisited(mainMatrix, isVisited, x, y)) {
                         // foreach (var a in dfslist) {
                         //     Console.WriteLine(a);
                         // }
@@ -134,11 +71,13 @@ namespace Maze {
                         int i = 0;
                         do {
                             dfslist.Add(reverse[i+1]);
+                            mainMatrix[x][y].numberOfVisits += 1;
                             i++;
-                        } while (!isAdjacentToUnvisited(mainMatrix, isVisited, reverse[i].Item1, reverse[i].Item2));
+                        } while (!ut.isAdjacentToUnvisited(mainMatrix, isVisited, reverse[i].Item1, reverse[i].Item2));
                     }
                 }
             }
+            ut.ResetMatrix(mainMatrix, isVisited);
             return dfslist;
         }
     }

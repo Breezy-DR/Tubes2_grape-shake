@@ -88,5 +88,76 @@ namespace Maze {
             }
             return count;
         } 
+
+        public bool canMoveRight(MatrixElement[][] mainMatrix, int x, int y) {
+            // return (!(mainMatrix[x][y+1].symbol == "X" || y == mainMatrix[0].Length - 1));
+            if (y == mainMatrix[0].Length - 1) {
+                return false;
+            } else if (mainMatrix[x][y+1].symbol == "X") {
+                return false;
+            } else {
+                return true;
+            }
+        }
+        public bool canMoveLeft(MatrixElement[][] mainMatrix, int x, int y) {
+            // return (!(mainMatrix[x][y-1].symbol == "X" || y == 0));
+            if (y == 0) {
+                return false;
+            } else if (mainMatrix[x][y-1].symbol == "X") {
+                return false;
+            } else {
+                return true;
+            }
+        }
+        public bool canMoveUp(MatrixElement[][] mainMatrix, int x, int y) {
+            // return (!(mainMatrix[x-1][y].symbol == "X" || x == 0));
+            if (x == 0) {
+                return false;
+            } else if (mainMatrix[x-1][y].symbol == "X") {
+                return false;
+            } else {
+                return true;
+            }
+        }
+        public bool canMoveDown(MatrixElement[][] mainMatrix, int x, int y) {
+            // return (!(mainMatrix[x+1][y].symbol == "X" || x == mainMatrix.Length - 1));
+            if (x == mainMatrix.Length - 1) {
+                return false;
+            } else if (mainMatrix[x+1][y].symbol == "X") {
+                return false;
+            } else {
+                return true;
+            }
+        }
+        public bool stuck(MatrixElement[][] mainMatrix, bool[,] isVisited, int x, int y) {
+            return ((!canMoveDown(mainMatrix, x, y) && !canMoveUp(mainMatrix, x, y) && !canMoveRight(mainMatrix, x, y) && canMoveLeft(mainMatrix, x, y) && isVisited[x, y-1])
+            || (!canMoveDown(mainMatrix, x, y) && !canMoveUp(mainMatrix, x, y) && canMoveRight(mainMatrix, x, y) && !canMoveLeft(mainMatrix, x, y) && isVisited[x, y+1]) ||
+            (!canMoveDown(mainMatrix, x, y) && canMoveUp(mainMatrix, x, y) && !canMoveRight(mainMatrix, x, y) && !canMoveLeft(mainMatrix, x, y) && isVisited[x-1, y]) ||
+            (canMoveDown(mainMatrix, x, y) && !canMoveUp(mainMatrix, x, y) && !canMoveRight(mainMatrix, x, y) && !canMoveLeft(mainMatrix, x, y) && isVisited[x+1, y]));
+        }
+
+        public bool surroundedByVisited(MatrixElement[][] mainMatrix, bool[,] isVisited, int x, int y) {
+            return ((!canMoveDown(mainMatrix, x, y) && !canMoveRight(mainMatrix, x, y) && canMoveLeft(mainMatrix, x, y) && canMoveUp(mainMatrix, x, y) && isVisited[x, y-1] && isVisited[x-1, y])
+            || (!canMoveUp(mainMatrix, x, y) && !canMoveRight(mainMatrix, x, y) && canMoveLeft(mainMatrix, x, y) && canMoveDown(mainMatrix, x, y) && isVisited[x, y-1] && isVisited[x+1, y])
+            || (canMoveUp(mainMatrix, x, y) && canMoveRight(mainMatrix, x, y) && !canMoveLeft(mainMatrix, x, y) && !canMoveDown(mainMatrix, x, y) && isVisited[x, y+1] && isVisited[x-1, y])
+            || (!canMoveUp(mainMatrix, x, y) && canMoveRight(mainMatrix, x, y) && !canMoveLeft(mainMatrix, x, y) && canMoveDown(mainMatrix, x, y) && isVisited[x, y+1] && isVisited[x+1, y])
+            );
+        }
+
+        public bool isAdjacentToUnvisited(MatrixElement[][] mainMatrix, bool[,] isVisited, int x, int y) {
+            return ((canMoveDown(mainMatrix, x, y) && !isVisited[x+1, y]) ||
+            (canMoveUp(mainMatrix, x, y) && !isVisited[x-1, y]) ||
+            (canMoveRight(mainMatrix, x, y) && !isVisited[x, y+1]) ||
+            (canMoveLeft(mainMatrix, x, y) && !isVisited[x, y-1]));
+        }
+
+        public void ResetMatrix(MatrixElement[][] mainMatrix, bool[,] isVisited) {
+            for (int i = 0; i < mainMatrix.Length; i++) {
+                for (int j = 0; j < mainMatrix[0].Length; j++) {
+                    mainMatrix[i][j].numberOfVisits = 0;
+                    isVisited[i, j] = false;
+                }
+            }
+        }
     }
 }

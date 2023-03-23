@@ -52,6 +52,24 @@ namespace Maze {
                 {
                     Console.WriteLine("({0}, {1})", tuple.Item1.ToString(), tuple.Item2.ToString());
                 }
+
+                // contoh pake TSP BFS
+                Tuple<List<Tuple<int, int, int, int>>, List<Tuple<int, int>>> bfsList = a.findBFSTSP(mainMatrix, jag, krustyKrabX, krustyKrabY);
+                
+                // Contoh TSP BFS
+                Console.WriteLine("TSP BFS");
+                Console.WriteLine("Jalur:");
+                foreach (var tuple in bfsList.Item2)
+                {
+                    Console.WriteLine("({0}, {1})", tuple.Item1, tuple.Item2);
+                }
+                Console.WriteLine("Proses:");
+                foreach (var tuple in bfsList.Item1)
+                {
+                    // Prosesnya cukup pake Item1 dan Item2
+                    Console.WriteLine("({0}, {1})", tuple.Item1.ToString(), tuple.Item2.ToString());
+                }
+
                 // Tuple<List<Tuple<int, int, int, int>>, List<Tuple<int, int>>> bfsList = a.findBFS(mainMatrix, jag, krustyKrabX, krustyKrabY);
                 // Console.WriteLine("BFS");
                 // Console.WriteLine("Jalur:");

@@ -74,7 +74,7 @@ namespace Maze {
             return retVal;
         }
 
-        private List<Tuple<int, int>> findPath(List<Tuple<int, int, int, int>> bfsProcess, int x, int y, int startX, int startY) {
+        public List<Tuple<int, int>> findPath(List<Tuple<int, int, int, int>> bfsProcess, int x, int y, int startX, int startY) {
             /* Fungsi untuk mencari path dari list process. 
                Menghasilkan list path dari titik start sampai ke treasure terakhir */
             List<Tuple<int, int>> path = new List<Tuple<int, int>>();

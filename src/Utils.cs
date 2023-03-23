@@ -167,5 +167,13 @@ namespace Maze {
                 }
             }
         }
+
+        public void ResetBoolMatrix(bool[,] isVisited) {
+            for (int i = 0; i < isVisited.GetLength(0); i++) {
+                for (int j = 0; j < isVisited.GetLength(1); j++) {
+                    isVisited[i, j] = false;
+                }
+            }
+        }
     }
 }

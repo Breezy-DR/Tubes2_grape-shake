@@ -9,8 +9,7 @@ namespace Maze {
                 // Console.Write("Masukkan nama file: ");
                 // filename = Console.ReadLine();
                 Utils ut = new Utils();
-                DFS dfs = new DFS();
-                string[][] jag = ut.ReadFile("sampel-5.txt");
+                string[][] jag = ut.ReadFile("test3.txt");
                 ut.printMatrix(jag);
                 if (!ut.isLineHaveEqualElement(jag)) {
                     Console.WriteLine("All lines have to have the same number of elements");
@@ -37,24 +36,35 @@ namespace Maze {
                     }
                 MatrixElement[][] mainMatrix = ut.InitMatrix(jag);
                 bool[,] isVisited = ut.InitBoolMatrix(jag);
-                List<Tuple<int, int>> dfslist = dfs.findDFS(mainMatrix, isVisited, jag, krustyKrabX, krustyKrabY);
+                DFS dfs = new DFS();
+                BFS a = new BFS();
+                Console.WriteLine("DFS");
+                Console.WriteLine("Jalur:");
+                Console.WriteLine("Proses:");
+                List<Tuple<int, int>> dfslist = dfs.findDFSPath(mainMatrix, isVisited, jag, krustyKrabX, krustyKrabY, "T");
                 foreach (var tuple in dfslist)
                 {
                     Console.WriteLine("({0}, {1})", tuple.Item1.ToString(), tuple.Item2.ToString());
                 }
-                BFS a = new BFS();
-                Tuple<List<Tuple<int, int, int, int>>, List<Tuple<int, int>>> bfsList = a.findBFS(mainMatrix, jag, krustyKrabX, krustyKrabY);
-                Console.WriteLine("Jalur:");
-                foreach (var tuple in bfsList.Item2)
+                Console.WriteLine("TSP:");
+                List<Tuple<int, int>> tsplist = dfs.findDFSTSP(mainMatrix, isVisited, jag, dfslist);
+                foreach (var tuple in tsplist)
                 {
-                    Console.WriteLine("({0}, {1})", tuple.Item1, tuple.Item2);
-                }
-                Console.WriteLine("Proses:");
-                foreach (var tuple in bfsList.Item1)
-                {
-                    // Prosesnya cukup pake Item1 dan Item2
                     Console.WriteLine("({0}, {1})", tuple.Item1.ToString(), tuple.Item2.ToString());
                 }
+                // Tuple<List<Tuple<int, int, int, int>>, List<Tuple<int, int>>> bfsList = a.findBFS(mainMatrix, jag, krustyKrabX, krustyKrabY);
+                // Console.WriteLine("BFS");
+                // Console.WriteLine("Jalur:");
+                // foreach (var tuple in bfsList.Item2)
+                // {
+                //     Console.WriteLine("({0}, {1})", tuple.Item1, tuple.Item2);
+                // }
+                // Console.WriteLine("Proses:");
+                // foreach (var tuple in bfsList.Item1)
+                // {
+                //     // Prosesnya cukup pake Item1 dan Item2
+                //     Console.WriteLine("({0}, {1})", tuple.Item1.ToString(), tuple.Item2.ToString());
+                // }
             }
             // } catch (Exception e) {
             //     Console.WriteLine(e.Message);

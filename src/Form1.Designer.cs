@@ -345,7 +345,7 @@
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
-            AutoScaleMode = AutoScaleMode.Font;
+            // AutoScaleMode = AutoScaleMode.Font;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(896, 563);
             panel1.Controls.Add(pictureBox1);
@@ -357,6 +357,7 @@
             Controls.Add(button1);
             Controls.Add(panel1);
             Controls.Add(label10);
+            MinimumSize = new Size(879, 570);
             Name = "Form1";
             Text = "Treasure Finder";
             Load += Form1_Load;

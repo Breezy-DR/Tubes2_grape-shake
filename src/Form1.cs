@@ -307,7 +307,7 @@ namespace WinFormsApp1
 
         private void simulate(List<Tuple<int, int>> steps, Color tail, Color head){
             // Untuk mensimulasi pencarian solusi jalur
-            label11.Text = "loading...";
+            label11.Invoke(t => t.Text = "loading...");
 
             List<List<int>> track = new List<List<int>>();
 
@@ -323,7 +323,7 @@ namespace WinFormsApp1
 
             for(int i = 0; i < steps.Count; i++){
                 if(backgroundWorker1.CancellationPending){
-                    label11.Text = "Canceled";
+                    label11.Invoke(t => t.Text = "Canceled");
                     return;
                 }
                 
@@ -343,7 +343,7 @@ namespace WinFormsApp1
                 track[steps[i].Item1][steps[i].Item2] += 30;
             }
 
-            label11.Text = "Done!";
+            label11.Invoke(t => t.Text = "Done!");
         }
 
         private void wait(int milliseconds)
@@ -407,7 +407,7 @@ namespace WinFormsApp1
         // Untuk memungkinkan program menerima input saat simulasi/pencarian solusi berlangsung
         {
             if(!simulateOrSearch){
-                label10.Invoke(t => t.Text = "Simulating...");
+                label11.Invoke(t => t.Text = "Simulating...");
                 simulate(simulationStep, Color.Yellow, Color.Green);
                 simulate(solutionStep, Color.Blue, Color.Green);
                 sSolution(solutionStep, Color.Green);

@@ -1,7 +1,7 @@
 # Tubes2_grape-shake
 
 ## Deskripsi Singkat
-Program ini merupakan simulasi game Maze Treasure Hunt dalam bentuk GUI.
+Program ini merupakan simulasi game Treasure Hunt Solver dalam bentuk GUI yang dapat mengimplementasikan BFS dan DFS untuk mendapatkan rute memperoleh seluruh treasure atau harta karun yang ada. Selain itu, GUI dapat mensimulasikan pencarian sesuai salah satu algoritma yang dipilih (BFS atau DFS) dengan waktu jeda yang dapat disesuaikan dengan slider. Program dapat menerima dan membaca input sebuah file txt pada folder `test` yang berisi maze yang akan ditemukan solusi rute mendapatkan treasure-nya: K (titik awal), T (treasure), R (grid yang dapat diakses), X (Grid halangan yang tidak dapat diakses). Program dibuat dengan bahasa C# dan menggunakan framework Visual Studio .NET.
 
 ## Requirement
 - .NET 7.0.202

@@ -345,7 +345,7 @@
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
-            // AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleMode = AutoScaleMode.Font;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(896, 563);
             panel1.Controls.Add(pictureBox1);
@@ -361,7 +361,6 @@
             Name = "Form1";
             Text = "Treasure Finder";
             Load += Form1_Load;
-            Resize += Form1_Resize;
             this.Icon = new Icon("./resource/Anime.ico");
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             panel1.ResumeLayout(false);
@@ -370,6 +369,7 @@
             ((System.ComponentModel.ISupportInitialize)trackBar1).EndInit();
             ResumeLayout(false);
             PerformLayout();
+            Resize += Form1_Resize;
         }
         #endregion
         private Button button1;

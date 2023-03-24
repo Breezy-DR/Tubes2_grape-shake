@@ -36,8 +36,9 @@ namespace Maze {
                     }
                 MatrixElement[][] mainMatrix = ut.InitMatrix(jag);
                 bool[,] isVisited = ut.InitBoolMatrix(jag);
-                BFSnDFS a = new BFSnDFS();
-                Tuple<List<Tuple<int, int, int, int>>, List<Tuple<int, int>>> dfsList = a.findDFSTSP(mainMatrix, jag, krustyKrabX, krustyKrabY);
+                BFS bfs = new BFS();
+                DFS dfs = new DFS();
+                Tuple<List<Tuple<int, int, int, int>>, List<Tuple<int, int>>> dfsList = dfs.findDFSTSP(mainMatrix, jag, krustyKrabX, krustyKrabY);
                 Console.WriteLine("TSP DFS");
                 Console.WriteLine("Jalur:");
                 foreach (var tuple in dfsList.Item2)
@@ -51,7 +52,7 @@ namespace Maze {
                 }
 
                 // contoh pake TSP BFS
-                Tuple<List<Tuple<int, int, int, int>>, List<Tuple<int, int>>> bfsList = a.findBFSTSP(mainMatrix, jag, krustyKrabX, krustyKrabY);
+                Tuple<List<Tuple<int, int, int, int>>, List<Tuple<int, int>>> bfsList = bfs.findBFSTSP(mainMatrix, jag, krustyKrabX, krustyKrabY);
                 
                 // Contoh TSP BFS
                 Console.WriteLine("TSP BFS");

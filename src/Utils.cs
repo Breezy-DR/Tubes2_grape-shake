@@ -175,5 +175,23 @@ namespace Maze {
                 }
             }
         }
+        public List<Tuple<int, int>> findPath(List<Tuple<int, int, int, int>> Process, int startX, int startY, int x, int y) {
+            /* Fungsi untuk mencari path berdasarkan list process BFS dan DFS. 
+               Menghasilkan list path dari titik (startX, startY) sampai ke titik (x, y) */
+            List<Tuple<int, int>> path = new List<Tuple<int, int>>();
+            int i = Process.Count - 1;
+
+            while (!(Process[i].Item1 == startX && Process[i].Item2 == startY && Process[i].Item3 == startX && Process[i].Item4 == startY)) {
+                if ((Process[i].Item1 == x && Process[i].Item2 == y) && !(Process[i].Item1 == Process[i].Item3 && Process[i].Item2 == Process[i].Item4)) {
+                    path.Add(new Tuple<int, int>(Process[i].Item1, Process[i].Item2));
+                    x = Process[i].Item3;
+                    y = Process[i].Item4;
+                }
+                i--;
+            }
+            path.Add(new Tuple<int, int>(startX, startY));
+            path.Reverse();
+            return path;
+        }
     }
 }

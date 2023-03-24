@@ -144,7 +144,7 @@ namespace Maze {
                     dfsProcess.Add(new Tuple<int, int, int, int>(currentX, currentY, prevX, prevY));
                 }
 
-                /* Jika treasure ditemukan, maka proses BFS berhenti */
+                /* Jika treasure ditemukan, maka proses DFS berhenti */
                 if (treasureMap[currentX][currentY].symbol == "T" && treasureMap[currentX][currentY].numberOfVisits < 1) {
                     found = true;
                 }
@@ -169,17 +169,17 @@ namespace Maze {
             return retVal;
         }
 
-        private List<Tuple<int, int>> findPath(List<Tuple<int, int, int, int>> bfsProcess, int startX, int startY, int x, int y) {
-            /* Fungsi untuk mencari path berdasarkan list process BFS. 
+        private List<Tuple<int, int>> findPath(List<Tuple<int, int, int, int>> Process, int startX, int startY, int x, int y) {
+            /* Fungsi untuk mencari path berdasarkan list process BFS dan DFS. 
                Menghasilkan list path dari titik (startX, startY) sampai ke titik (x, y) */
             List<Tuple<int, int>> path = new List<Tuple<int, int>>();
-            int i = bfsProcess.Count - 1;
+            int i = Process.Count - 1;
 
-            while (!(bfsProcess[i].Item1 == startX && bfsProcess[i].Item2 == startY && bfsProcess[i].Item3 == startX && bfsProcess[i].Item4 == startY)) {
-                if ((bfsProcess[i].Item1 == x && bfsProcess[i].Item2 == y) && !(bfsProcess[i].Item1 == bfsProcess[i].Item3 && bfsProcess[i].Item2 == bfsProcess[i].Item4)) {
-                    path.Add(new Tuple<int, int>(bfsProcess[i].Item1, bfsProcess[i].Item2));
-                    x = bfsProcess[i].Item3;
-                    y = bfsProcess[i].Item4;
+            while (!(Process[i].Item1 == startX && Process[i].Item2 == startY && Process[i].Item3 == startX && Process[i].Item4 == startY)) {
+                if ((Process[i].Item1 == x && Process[i].Item2 == y) && !(Process[i].Item1 == Process[i].Item3 && Process[i].Item2 == Process[i].Item4)) {
+                    path.Add(new Tuple<int, int>(Process[i].Item1, Process[i].Item2));
+                    x = Process[i].Item3;
+                    y = Process[i].Item4;
                 }
                 i--;
             }
@@ -228,15 +228,15 @@ namespace Maze {
             int treasureFound = 0;
             int treasureAmount = ut.ElementCount(jag, "T");
             while (treasureFound < treasureAmount) {
-                /* Menggunakan BFS untuk mencari semua treasure dari start. 
-                   Pencarian BFS dilakukan dari start ke treasure 1, treasure 1 ke treasure 2, dst sampai ke treasure terakhir */
+                /* Menggunakan DFS untuk mencari semua treasure dari start. 
+                   Pencarian DFS dilakukan dari start ke treasure 1, treasure 1 ke treasure 2, dst sampai ke treasure terakhir */
                 sub_solution = findSubDFS(treasureMap, jag, x, y);
                 dfsProcess.AddRange(sub_solution.Item3);
                 x = sub_solution.Item1;
                 y = sub_solution.Item2;
                 treasureFound++;
             }
-            /* Menggunakan BFS untuk mencapai titik start dari titik treasure terakhir (x, y) */
+            /* Menggunakan DFS untuk mencapai titik start dari titik treasure terakhir (x, y) */
             tspPart = findTreasureToStart(treasureMap, jag, x, y);
             dfsProcess.AddRange(tspPart);
 
@@ -247,8 +247,8 @@ namespace Maze {
         }
 
         private List<Tuple<int, int, int, int>> findTreasureToStart(MatrixElement[][] treasureMap, string[][] jag, int x, int y) {
-            /* Fungsi BFS dari treasure terakhir ke titik start. 
-               Menghasilkan koordinat dan list process untuk koordinat yang dicek menggunakan BFS */
+            /* Fungsi DFS dari treasure terakhir ke titik start. 
+               Menghasilkan koordinat dan list process untuk koordinat yang dicek menggunakan DFS */
             bool found = false;
             Utils ut = new Utils();
             bool[,] isVisited = ut.InitBoolMatrix(jag);

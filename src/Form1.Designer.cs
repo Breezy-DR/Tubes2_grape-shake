@@ -77,6 +77,7 @@
             textBox1.PlaceholderText = "Enter File Path..";
             textBox1.Size = new Size(559, 27);
             textBox1.TabIndex = 2;
+            textBox1.Click += textBox1_Click;
             // 
             // label1
             // 

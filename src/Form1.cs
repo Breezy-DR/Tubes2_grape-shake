@@ -45,7 +45,7 @@ namespace WinFormsApp1
                 // this.mapGridView.Columns.Add("","");
                 // this.mapGridView.Rows.Add();
                 Utils ut = new Utils();
-                jag = ut.ReadFile(textBox1.Text);
+                jag = ut.ReadFile(ofd.FileName);
                 if (!ut.isLineHaveEqualElement(jag)) {
                     label2.Text = "All lines have to have the same number of elements";
                 } else if (!ut.isSymbolValid(jag)) {
@@ -160,7 +160,9 @@ namespace WinFormsApp1
             originalButton3Size = new Rectangle(button3.Location.X, button3.Location.Y, button3.Size.Width, button3.Size.Height);
             originalLabel2Size = new Rectangle(label2.Location.X, label2.Location.Y, label2.Size.Width, label2.Size.Height);
             originalLabel11Size = new Rectangle(label11.Location.X, label11.Location.Y, label11.Size.Width, label11.Size.Height);
-            originalTrackBarSize = new Rectangle(trackBar1.Location.X, trackBar1.Location.Y, trackBar1.Size.Width, trackBar1.Size.Height);  
+            originalTrackBarSize = new Rectangle(trackBar1.Location.X, trackBar1.Location.Y, trackBar1.Size.Width, trackBar1.Size.Height);
+
+            ofd = new OpenFileDialog(); 
         }
 
         private void Form1_Resize(object sender, EventArgs e)
@@ -404,11 +406,18 @@ namespace WinFormsApp1
         {
 
         }
+
+        private void textBox1_Click(object sender, EventArgs e){
+            if(ofd.ShowDialog() == DialogResult.OK){
+                textBox1.Text = ofd.FileName;
+            }
+        }
         private string[][] jag;
         private List<Tuple<int, int>> simulationStep;
         private List<Tuple<int, int>> solutionStep;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private bool simulateOrSearch;
         private int tick = 1000;
+        private OpenFileDialog ofd;
     }
 }

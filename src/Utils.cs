@@ -5,7 +5,7 @@ namespace Maze {
     {
         public string[][] ReadFile(string filename) {
             string [][] list =
-            File.ReadAllLines("../test/" + filename)
+            File.ReadAllLines(filename)
             .Select(l => l.Split(' ').ToArray()).ToArray();
             return list;
         }

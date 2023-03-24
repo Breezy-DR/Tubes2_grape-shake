@@ -292,9 +292,9 @@ namespace WinFormsApp1
                 
                 int temp1 = track[steps[i].Item1][steps[i].Item2];
 
-                int r = Math.Max(tail.R - temp1, 0); // increase red component
-                int g = Math.Max(tail.G - temp1, 0); // increase green component
-                int b = Math.Max(tail.B - temp1, 0); // increase blue component
+                int r = Math.Max(tail.R - temp1, 40); // increase red component
+                int g = Math.Max(tail.G - temp1, 40); // increase green component
+                int b = Math.Max(tail.B - temp1, 40); // increase blue component
                 Color myColor = Color.FromArgb(tail.A, r, g, b);
 
                 previousCell.Style.BackColor = myColor;                                           
@@ -303,7 +303,7 @@ namespace WinFormsApp1
                 wait(tick);
                 previousCell = dataGridView1.Rows[steps[i].Item1].Cells[steps[i].Item2];
 
-                track[steps[i].Item1][steps[i].Item2] += 35;
+                track[steps[i].Item1][steps[i].Item2] += 30;
             }
 
             label11.Text = "Done!";

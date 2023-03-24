@@ -19,15 +19,6 @@ namespace WinFormsApp1
             backgroundWorker1 = new BackgroundWorker();
             backgroundWorker1.DoWork += new DoWorkEventHandler(backgroundWorker1_DoWork);
             backgroundWorker1.WorkerSupportsCancellation = true;
-
-            //design purpose
-            originalFormSize = new Rectangle(this.Location.X, this.Location.Y, this.Size.Width, this.Size.Height);
-            originalTextBox1Size = new Rectangle(textBox1.Location.X, textBox1.Location.Y, textBox1.Size.Width, textBox1.Size.Height);
-            originalButton1Size = new Rectangle(button1.Location.X, button1.Location.Y, button1.Size.Width, button1.Size.Height);
-            originalButton3Size = new Rectangle(button3.Location.X, button3.Location.Y, button3.Size.Width, button3.Size.Height);
-            originalLabel2Size = new Rectangle(label2.Location.X, label2.Location.Y, label2.Size.Width, label2.Size.Height);
-            originalLabel11Size = new Rectangle(label11.Location.X, label11.Location.Y, label11.Size.Width, label11.Size.Height);
-            originalTrackBarSize = new Rectangle(trackBar1.Location.X, trackBar1.Location.Y, trackBar1.Size.Width, trackBar1.Size.Height);
         }
 
         private void trackBar1_ValueChanged(object sender, EventArgs e)
@@ -162,18 +153,26 @@ namespace WinFormsApp1
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            //design purpose
+            originalFormSize = new Rectangle(this.Location.X, this.Location.Y, this.Size.Width, this.Size.Height);
+            originalTextBox1Size = new Rectangle(textBox1.Location.X, textBox1.Location.Y, textBox1.Size.Width, textBox1.Size.Height);
+            originalButton1Size = new Rectangle(button1.Location.X, button1.Location.Y, button1.Size.Width, button1.Size.Height);
+            originalButton3Size = new Rectangle(button3.Location.X, button3.Location.Y, button3.Size.Width, button3.Size.Height);
+            originalLabel2Size = new Rectangle(label2.Location.X, label2.Location.Y, label2.Size.Width, label2.Size.Height);
+            originalLabel11Size = new Rectangle(label11.Location.X, label11.Location.Y, label11.Size.Width, label11.Size.Height);
+            originalTrackBarSize = new Rectangle(trackBar1.Location.X, trackBar1.Location.Y, trackBar1.Size.Width, trackBar1.Size.Height);  
         }
 
         private void Form1_Resize(object sender, EventArgs e)
         {
-            moveOnResize(textBox1, originalTextBox1Size, false, true);
-            moveOnResize(button1, originalButton1Size, false, true);
-            moveOnResize(label2, originalLabel2Size, false, true);
-            moveOnResize(button3, originalButton3Size, false, true);
-            moveOnResize(label11, originalLabel11Size, false, true);
-            moveOnResize(trackBar1, originalTrackBarSize, false, true);
+            // moveOnResize(textBox1, originalTextBox1Size, false, true);
+            // moveOnResize(button1, originalButton1Size, false, true);
+            // moveOnResize(label2, originalLabel2Size, false, true);
+            // moveOnResize(button3, originalButton3Size, false, true);
+            // moveOnResize(label11, originalLabel11Size, false, true);
+            // moveOnResize(trackBar1, originalTrackBarSize, false, true);
 
-            AdjustRowHeight(dataGridView1);
+            // AdjustRowHeight(dataGridView1);
         }
 
         private void moveOnResize(Control control, Rectangle rectangle, bool movePositionX, bool movePositionY)
@@ -385,13 +384,6 @@ namespace WinFormsApp1
         {
 
         }
-        private Rectangle originalFormSize;
-        private Rectangle originalTextBox1Size;
-        private Rectangle originalButton1Size;
-        private Rectangle originalButton3Size;
-        private Rectangle originalLabel2Size;
-        private Rectangle originalLabel11Size;
-        private Rectangle originalTrackBarSize;
         private string[][] jag;
         private List<Tuple<int, int>> simulationStep;
         private List<Tuple<int, int>> solutionStep;

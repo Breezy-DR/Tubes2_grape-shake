@@ -129,27 +129,6 @@ namespace Maze {
                 return true;
             }
         }
-        public bool stuck(MatrixElement[][] mainMatrix, bool[,] isVisited, int x, int y) {
-            return ((!canMoveDown(mainMatrix, x, y) && !canMoveUp(mainMatrix, x, y) && !canMoveRight(mainMatrix, x, y) && canMoveLeft(mainMatrix, x, y) && isVisited[x, y-1])
-            || (!canMoveDown(mainMatrix, x, y) && !canMoveUp(mainMatrix, x, y) && canMoveRight(mainMatrix, x, y) && !canMoveLeft(mainMatrix, x, y) && isVisited[x, y+1]) ||
-            (!canMoveDown(mainMatrix, x, y) && canMoveUp(mainMatrix, x, y) && !canMoveRight(mainMatrix, x, y) && !canMoveLeft(mainMatrix, x, y) && isVisited[x-1, y]) ||
-            (canMoveDown(mainMatrix, x, y) && !canMoveUp(mainMatrix, x, y) && !canMoveRight(mainMatrix, x, y) && !canMoveLeft(mainMatrix, x, y) && isVisited[x+1, y]));
-        }
-
-        public bool surroundedByVisited(MatrixElement[][] mainMatrix, bool[,] isVisited, int x, int y) {
-            return ((!canMoveDown(mainMatrix, x, y) && !canMoveRight(mainMatrix, x, y) && canMoveLeft(mainMatrix, x, y) && canMoveUp(mainMatrix, x, y) && isVisited[x, y-1] && isVisited[x-1, y])
-            || (!canMoveUp(mainMatrix, x, y) && !canMoveRight(mainMatrix, x, y) && canMoveLeft(mainMatrix, x, y) && canMoveDown(mainMatrix, x, y) && isVisited[x, y-1] && isVisited[x+1, y])
-            || (canMoveUp(mainMatrix, x, y) && canMoveRight(mainMatrix, x, y) && !canMoveLeft(mainMatrix, x, y) && !canMoveDown(mainMatrix, x, y) && isVisited[x, y+1] && isVisited[x-1, y])
-            || (!canMoveUp(mainMatrix, x, y) && canMoveRight(mainMatrix, x, y) && !canMoveLeft(mainMatrix, x, y) && canMoveDown(mainMatrix, x, y) && isVisited[x, y+1] && isVisited[x+1, y])
-            );
-        }
-
-        public bool isAdjacentToUnvisited(MatrixElement[][] mainMatrix, bool[,] isVisited, int x, int y) {
-            return ((canMoveDown(mainMatrix, x, y) && !isVisited[x+1, y]) ||
-            (canMoveUp(mainMatrix, x, y) && !isVisited[x-1, y]) ||
-            (canMoveRight(mainMatrix, x, y) && !isVisited[x, y+1]) ||
-            (canMoveLeft(mainMatrix, x, y) && !isVisited[x, y-1]));
-        }
 
         public void ResetMatrix(MatrixElement[][] mainMatrix, bool[,] isVisited) {
             for (int i = 0; i < mainMatrix.Length; i++) {

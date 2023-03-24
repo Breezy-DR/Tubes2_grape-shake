@@ -165,14 +165,14 @@ namespace WinFormsApp1
 
         private void Form1_Resize(object sender, EventArgs e)
         {
-            // moveOnResize(textBox1, originalTextBox1Size, false, true);
-            // moveOnResize(button1, originalButton1Size, false, true);
-            // moveOnResize(label2, originalLabel2Size, false, true);
-            // moveOnResize(button3, originalButton3Size, false, true);
-            // moveOnResize(label11, originalLabel11Size, false, true);
-            // moveOnResize(trackBar1, originalTrackBarSize, false, true);
+            moveOnResize(textBox1, originalTextBox1Size, false, true);
+            moveOnResize(button1, originalButton1Size, false, true);
+            moveOnResize(label2, originalLabel2Size, false, true);
+            moveOnResize(button3, originalButton3Size, false, true);
+            moveOnResize(label11, originalLabel11Size, false, true);
+            moveOnResize(trackBar1, originalTrackBarSize, false, true);
 
-            // AdjustRowHeight(dataGridView1);
+            AdjustRowHeight(dataGridView1);
         }
 
         private void moveOnResize(Control control, Rectangle rectangle, bool movePositionX, bool movePositionY)

@@ -208,7 +208,7 @@ namespace Maze {
                 treasureFound++;
             }
             /* Menggunakan BFS untuk mencapai titik start dari titik treasure terakhir (x, y) */
-            tspPart = findTreasureToStart(treasureMap, jag, x, y);
+            tspPart = findTreasureToStartBFS(treasureMap, jag, x, y);
             bfsProcess.AddRange(tspPart);
 
             List<Tuple<int, int>> solutionPath = findPath(bfsProcess, startX, startY, startX, startY);
@@ -218,7 +218,7 @@ namespace Maze {
         }
 
         public Tuple<List<Tuple<int, int, int, int>>, List<Tuple<int, int>>> findDFSTSP(MatrixElement[][] treasureMap, string[][] jag, int x, int y) {
-            /* Menghasilkan list process BFS secara keseluruhan dan list path dari titik start sampai ke titik start kembali dengan semua treasure telah didapatkan */
+            /* Menghasilkan list process DFS secara keseluruhan dan list path dari titik start sampai ke titik start kembali dengan semua treasure telah didapatkan */
             List<Tuple<int, int, int, int>> dfsProcess = new List<Tuple<int, int, int, int>>();
             List<Tuple<int, int, int, int>> tspPart;
             Tuple<int, int, List<Tuple<int, int, int, int>>> sub_solution;
@@ -237,7 +237,7 @@ namespace Maze {
                 treasureFound++;
             }
             /* Menggunakan DFS untuk mencapai titik start dari titik treasure terakhir (x, y) */
-            tspPart = findTreasureToStart(treasureMap, jag, x, y);
+            tspPart = findTreasureToStartDFS(treasureMap, jag, x, y);
             dfsProcess.AddRange(tspPart);
 
             List<Tuple<int, int>> solutionPath = findPath(dfsProcess, startX, startY, startX, startY);
@@ -246,13 +246,13 @@ namespace Maze {
             return dfsList;
         }
 
-        private List<Tuple<int, int, int, int>> findTreasureToStart(MatrixElement[][] treasureMap, string[][] jag, int x, int y) {
+        private List<Tuple<int, int, int, int>> findTreasureToStartDFS(MatrixElement[][] treasureMap, string[][] jag, int x, int y) {
             /* Fungsi DFS dari treasure terakhir ke titik start. 
                Menghasilkan koordinat dan list process untuk koordinat yang dicek menggunakan DFS */
             bool found = false;
             Utils ut = new Utils();
             bool[,] isVisited = ut.InitBoolMatrix(jag);
-            List<Tuple<int, int, int, int>> bfsProcess = new List<Tuple<int, int, int, int>>();
+            List<Tuple<int, int, int, int>> DfsProcess = new List<Tuple<int, int, int, int>>();
             Stack<Tuple<int, int, int, int>> dfsStack = new Stack<Tuple<int, int, int, int>>();
             dfsStack.Push(new Tuple<int, int, int, int>(x, y, x, y));
             int currentX = x;
@@ -269,7 +269,7 @@ namespace Maze {
 
                 if (!isVisited[currentX, currentY]) {
                     isVisited[currentX, currentY] = true;
-                    bfsProcess.Add(new Tuple<int, int, int, int>(currentX, currentY, prevX, prevY));
+                    DfsProcess.Add(new Tuple<int, int, int, int>(currentX, currentY, prevX, prevY));
                 }
 
                 if (treasureMap[currentX][currentY].symbol == "K") {
@@ -287,6 +287,54 @@ namespace Maze {
                     }
                     if (ut.canMoveLeft(treasureMap, currentX, currentY) && !isVisited[currentX, currentY - 1]) {
                         dfsStack.Push(new Tuple<int, int, int, int>(currentX, currentY - 1, currentX, currentY));
+                    }
+                }
+                treasureMap[currentX][currentY].numberOfVisits++;
+            }
+            return (new List<Tuple<int, int, int, int>>(DfsProcess));
+        }
+
+        private List<Tuple<int, int, int, int>> findTreasureToStartBFS(MatrixElement[][] treasureMap, string[][] jag, int x, int y) {
+            /* Fungsi BFS dari treasure terakhir ke titik start. 
+               Menghasilkan koordinat dan list process untuk koordinat yang dicek menggunakan BFS */
+            bool found = false;
+            Utils ut = new Utils();
+            bool[,] isVisited = ut.InitBoolMatrix(jag);
+            List<Tuple<int, int, int, int>> bfsProcess = new List<Tuple<int, int, int, int>>();
+            Queue<Tuple<int, int, int, int>> BFSQueue = new Queue<Tuple<int, int, int, int>>();
+            BFSQueue.Enqueue(new Tuple<int, int, int, int>(x, y, x, y));
+            int currentX = x;
+            int currentY = y;
+            int prevX;
+            int prevY;
+
+            while (!found) {
+                currentX = BFSQueue.Peek().Item1;
+                currentY = BFSQueue.Peek().Item2;
+                prevX = BFSQueue.Peek().Item3;
+                prevY = BFSQueue.Peek().Item4;
+                BFSQueue.Dequeue();
+
+                if (!isVisited[currentX, currentY]) {
+                    isVisited[currentX, currentY] = true;
+                    bfsProcess.Add(new Tuple<int, int, int, int>(currentX, currentY, prevX, prevY));
+                }
+
+                if (treasureMap[currentX][currentY].symbol == "K") {
+                    found = true;
+                }
+                else {
+                    if (ut.canMoveDown(treasureMap, currentX, currentY) && !isVisited[currentX + 1, currentY]) {
+                        BFSQueue.Enqueue(new Tuple<int, int, int, int>(currentX + 1, currentY, currentX, currentY));
+                    }
+                    if (ut.canMoveUp(treasureMap, currentX, currentY) && !isVisited[currentX - 1, currentY]) {
+                        BFSQueue.Enqueue(new Tuple<int, int, int, int>(currentX - 1, currentY, currentX, currentY));
+                    }
+                    if (ut.canMoveRight(treasureMap, currentX, currentY) && !isVisited[currentX, currentY + 1]) {
+                        BFSQueue.Enqueue(new Tuple<int, int, int, int>(currentX, currentY + 1, currentX, currentY));
+                    }
+                    if (ut.canMoveLeft(treasureMap, currentX, currentY) && !isVisited[currentX, currentY - 1]) {
+                        BFSQueue.Enqueue(new Tuple<int, int, int, int>(currentX, currentY - 1, currentX, currentY));
                     }
                 }
                 treasureMap[currentX][currentY].numberOfVisits++;

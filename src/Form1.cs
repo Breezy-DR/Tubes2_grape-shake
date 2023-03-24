@@ -1,8 +1,21 @@
 using Maze;
 using System.ComponentModel;
 
+
+
 namespace WinFormsApp1
 {
+    public static class Extensions
+    {
+        public static void Invoke<TControlType>(this TControlType control, Action<TControlType> del) 
+            where TControlType : Control
+            {
+                if (control.InvokeRequired)
+                    control.Invoke(new Action(() => del(control)));
+                else
+                    del(control);
+        }
+    }
     public partial class Form1 : Form
     {
         public Form1()
@@ -394,7 +407,7 @@ namespace WinFormsApp1
         // Untuk memungkinkan program menerima input saat simulasi/pencarian solusi berlangsung
         {
             if(!simulateOrSearch){
-                label11.Text = "Simulating...";
+                label10.Invoke(t => t.Text = "Simulating...");
                 simulate(simulationStep, Color.Yellow, Color.Green);
                 simulate(solutionStep, Color.Blue, Color.Green);
                 sSolution(solutionStep, Color.Green);
@@ -409,14 +422,15 @@ namespace WinFormsApp1
                 }
                 watch.Stop();
                 var elapsedMs = watch.ElapsedTicks;
-                label10.Text = elapsedMs.ToString() + " ticks";
+                label10.Invoke(t => t.Text = elapsedMs.ToString() + " ticks");
+                // label10.Text = elapsedMs.ToString() + " ticks";
                 if(solutionStep.Count > 0){
                     sSolution(solutionStep, Color.Green);
-                    label7.Text = simulationStep.Count.ToString();
-                    label9.Text = solutionStep.Count.ToString();
-                    textBox2.Text = translateSteps(solutionStep);
+                    label7.Invoke(t => t.Text = simulationStep.Count.ToString());
+                    label9.Invoke(t => t.Text = solutionStep.Count.ToString());
+                    textBox2.Invoke(t => t.Text = translateSteps(solutionStep));
                 } else {
-                    label12.Text = "Search interrupted, possible error may occur";
+                    label12.Invoke(t => t.Text = "Search interrupted, possible error may occur");
                 }
             }
             

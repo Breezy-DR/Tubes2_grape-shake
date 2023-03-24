@@ -9,7 +9,7 @@ namespace Maze {
                 // Console.Write("Masukkan nama file: ");
                 // filename = Console.ReadLine();
                 Utils ut = new Utils();
-                string[][] jag = ut.ReadFile("test3.txt");
+                string[][] jag = ut.ReadFile("sampel-2.txt");
                 ut.printMatrix(jag);
                 if (!ut.isLineHaveEqualElement(jag)) {
                     Console.WriteLine("All lines have to have the same number of elements");
@@ -36,19 +36,16 @@ namespace Maze {
                     }
                 MatrixElement[][] mainMatrix = ut.InitMatrix(jag);
                 bool[,] isVisited = ut.InitBoolMatrix(jag);
-                DFS dfs = new DFS();
-                BFS a = new BFS();
-                Console.WriteLine("DFS");
+                BFSnDFS a = new BFSnDFS();
+                Tuple<List<Tuple<int, int, int, int>>, List<Tuple<int, int>>> dfsList = a.findDFSTSP(mainMatrix, jag, krustyKrabX, krustyKrabY);
+                Console.WriteLine("TSP DFS");
                 Console.WriteLine("Jalur:");
-                Console.WriteLine("Proses:");
-                List<Tuple<int, int>> dfslist = dfs.findDFSPath(mainMatrix, isVisited, jag, krustyKrabX, krustyKrabY, "T");
-                foreach (var tuple in dfslist)
+                foreach (var tuple in dfsList.Item2)
                 {
                     Console.WriteLine("({0}, {1})", tuple.Item1.ToString(), tuple.Item2.ToString());
                 }
-                Console.WriteLine("TSP:");
-                List<Tuple<int, int>> tsplist = dfs.findDFSTSP(mainMatrix, isVisited, jag, dfslist);
-                foreach (var tuple in tsplist)
+                Console.WriteLine("Proses:");
+                foreach (var tuple in dfsList.Item1)
                 {
                     Console.WriteLine("({0}, {1})", tuple.Item1.ToString(), tuple.Item2.ToString());
                 }

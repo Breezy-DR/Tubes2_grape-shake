@@ -88,6 +88,15 @@ namespace WinFormsApp1
                 jag = new string[0][];
                 simulationStep.Clear();
                 solutionStep.Clear();
+            } catch (ArgumentException exc){
+                label2.Text = "Please enter a file name at '../test'";
+                if(backgroundWorker1.IsBusy){
+                    backgroundWorker1.CancelAsync();
+                    label11.Text = "Canceled";
+                }
+
+                jag = new string[0][];
+                simulationStep.Clear();
             }
         }
 

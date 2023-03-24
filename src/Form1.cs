@@ -272,6 +272,16 @@ namespace WinFormsApp1
         private void simulate(List<Tuple<int, int>> steps, Color tail, Color head){
             label11.Text = "loading...";
 
+            List<List<int>> track = new List<List<int>>();
+
+            for (int i=0; i < jag.Length; i++) {
+                List<int> temp = new List<int>();
+                for (int j=0; j < jag[i].Length; j++) {
+                    temp.Add(0);
+                }
+                track.Add(temp);
+            }
+
             DataGridViewCell previousCell = dataGridView1.Rows[steps[0].Item1].Cells[steps[0].Item2];
 
             for(int i = 0; i < steps.Count; i++){
@@ -279,11 +289,21 @@ namespace WinFormsApp1
                     label11.Text = "Canceled";
                     return;
                 }
-                previousCell.Style.BackColor = tail;
+                
+                int temp1 = track[steps[i].Item1][steps[i].Item2];
+
+                int r = Math.Max(tail.R - temp1, 0); // increase red component
+                int g = Math.Max(tail.G - temp1, 0); // increase green component
+                int b = Math.Max(tail.B - temp1, 0); // increase blue component
+                Color myColor = Color.FromArgb(tail.A, r, g, b);
+
+                previousCell.Style.BackColor = myColor;                                           
+
                 dataGridView1.Rows[steps[i].Item1].Cells[steps[i].Item2].Style.BackColor = head;
                 wait(tick);
                 previousCell = dataGridView1.Rows[steps[i].Item1].Cells[steps[i].Item2];
 
+                track[steps[i].Item1][steps[i].Item2] += 35;
             }
 
             label11.Text = "Done!";

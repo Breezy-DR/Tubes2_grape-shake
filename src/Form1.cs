@@ -22,11 +22,13 @@ namespace WinFormsApp1
         }
 
         private void trackBar1_ValueChanged(object sender, EventArgs e)
+        // Untuk mengubah kecepatan simulasi pencarian
         {
             tick = 1000/(int)(1 + trackBar1.Value * 0.1f);
         }
 
         private void button1_Click(object sender, EventArgs e)
+        // Untuk membuat map dari file pada folder test
         {
             try {
                 label7.Text = "-";
@@ -90,6 +92,7 @@ namespace WinFormsApp1
         }
 
         private void drawMap(){
+            // Untuk menggambar map atau mereset map
             for (int row = 0; row < jag.Length; row++){
                 for(int column = 0; column < jag[row].Length; column++){
                     if(jag[row][column] == "K"){
@@ -109,6 +112,7 @@ namespace WinFormsApp1
         }
 
         private void button2_Click(object sender, EventArgs e)
+        // Untuk mencari solusi jalur BFS/DFS/TSP
         {
             if(jag.Length > 0){
                 simulateOrSearch = true;
@@ -129,6 +133,7 @@ namespace WinFormsApp1
         }
 
         private void button3_Click(object sender, EventArgs e)
+        // Untuk mensimulasi pencarian
         {
             try{
                 drawMap();
@@ -152,6 +157,7 @@ namespace WinFormsApp1
 
 
         private void Form1_Load(object sender, EventArgs e)
+        // Untuk menginisiasi variabel lokal
         {
             //design purpose
             originalFormSize = new Rectangle(this.Location.X, this.Location.Y, this.Size.Width, this.Size.Height);
@@ -166,6 +172,7 @@ namespace WinFormsApp1
         }
 
         private void Form1_Resize(object sender, EventArgs e)
+        // Untuk melakukan perubahan bentuk kontroler pada form saat ukuran window diubah
         {
             moveOnResize(textBox1, originalTextBox1Size, false, true);
             moveOnResize(button1, originalButton1Size, false, true);
@@ -178,6 +185,7 @@ namespace WinFormsApp1
         }
 
         private void moveOnResize(Control control, Rectangle rectangle, bool movePositionX, bool movePositionY)
+        // Untuk merubah posisi kontroler
         {
             int dX = this.Width - originalFormSize.Width;
             int dY = this.Height - originalFormSize.Height;
@@ -194,6 +202,7 @@ namespace WinFormsApp1
         }
 
         private void AdjustRowHeight(DataGridView dataGridView)
+        // Untuk merubah ukuran row pada dataGridView sesuai ukuran window
         {   
             int rowHeight = 0;
             if(dataGridView.RowCount != 0){
@@ -208,6 +217,7 @@ namespace WinFormsApp1
         }
 
         private void searchDFS(){
+            // Aplikasi penggunaan class DFS untuk mencari solusi jalur
             int krustyKrabX = 0;
             int krustyKrabY = 0;
             for (int i=0; i < jag.Length; i++) {
@@ -237,6 +247,7 @@ namespace WinFormsApp1
         }
 
         private void searchBFS(){
+            // Aplikasi penggunaan class BFS untuk mencari solusi jalur
             int krustyKrabX = 0;
             int krustyKrabY = 0;
             for (int i=0; i < jag.Length; i++) {
@@ -266,12 +277,14 @@ namespace WinFormsApp1
         }
 
         private void sSolution(List<Tuple<int, int>> steps, Color highlight){
+            // Untuk menampilkan solusi jalur
             for(int i = 0; i < steps.Count; i++){
                 dataGridView1.Rows[steps[i].Item1].Cells[steps[i].Item2].Style.BackColor = highlight;
             }
         }
 
         private void simulate(List<Tuple<int, int>> steps, Color tail, Color head){
+            // Untuk mensimulasi pencarian solusi jalur
             label11.Text = "loading...";
 
             List<List<int>> track = new List<List<int>>();
@@ -312,6 +325,7 @@ namespace WinFormsApp1
         }
 
         private void wait(int milliseconds)
+        // Untuk mengatur kecepatan simulasi
         {
             var timer1 = new System.Windows.Forms.Timer();
             if (milliseconds == 0 || milliseconds < 0) return;
@@ -339,6 +353,7 @@ namespace WinFormsApp1
         }
 
         private string translateSteps(List<Tuple<int, int>> steps){
+            // Untuk mendapatkan Step dari solusi jalur (U,D,R,L)
             string result = "";
             Tuple<int, int> previousPoint = steps[0];
 
@@ -367,6 +382,7 @@ namespace WinFormsApp1
         }
 
         private void backgroundWorker1_DoWork ( object sender, DoWorkEventArgs e )
+        // Untuk memungkinkan program menerima input saat simulasi/pencarian solusi berlangsung
         {
             if(!simulateOrSearch){
                 label11.Text = "Simulating...";

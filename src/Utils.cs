@@ -4,6 +4,7 @@ namespace Maze {
     class Utils
     {
         public string[][] ReadFile(string filename) {
+            // Menerima dan membaca file .txt yang akan menjadi input peta maze treasure hunt.
             string [][] list =
             File.ReadAllLines("../test/" + filename)
             .Select(l => l.Split(' ').ToArray()).ToArray();
@@ -11,6 +12,7 @@ namespace Maze {
         }
 
         public bool isSymbolValid(string[][] jag) {
+            // Mengecek apakah sebuah string berupa “K”, “R”, “T”, atau “X”.
             for (int x = 0; x < jag.Length; x++) {
                     for (int y = 0; y < jag[x].Length; y++) {
                         if (jag[x][y] != "K" && jag[x][y] != "R" && jag[x][y] != "X" && jag[x][y] != "T") {
@@ -22,6 +24,7 @@ namespace Maze {
         }
 
         public void printMatrix(string[][] jag) {
+            // Mem-print Matrix, hanya untuk ProgramTest
             for (int x = 0; x < jag.Length; x++) {
                     for (int y = 0; y < jag[x].Length; y++) {
                         Console.Write(jag[x][y] + " ");
@@ -31,6 +34,7 @@ namespace Maze {
         }
 
         public bool isLineHaveEqualElement(string[][] jag) {
+            // Mengecek apakah tiap baris dari sebuah array 2D memiliki jumlah elemen yang sama
             List<int> LineElementCount = new List<int>();
             for (int x = 0; x < jag.Length; x++) {
                     int countelement = 0;
@@ -55,6 +59,7 @@ namespace Maze {
         }
 
         public MatrixElement[][] InitMatrix(string[][] jag) {
+            // Menginisialisasi matriks peta dengan simbol sesuai input file dan numberOfVisits = 0
             MatrixElement[][] init = new MatrixElement[jag.Length][];
             for (int i = 0; i < jag.Length; i++) {
                 init[i] = new MatrixElement[jag[0].Length];
@@ -68,6 +73,7 @@ namespace Maze {
         }
 
         public bool[,] InitBoolMatrix(string[][] jag) {
+            // Menginisialisasi array 2D boolean sesuai dimensi pada matriks peta dengan nilai semua elemen = false
             bool [,] isVisited = new bool[jag.Length, jag[0].Length];
             for (int i=0; i < jag.Length; i++) {
                 for (int j = 0; j < jag[i].Length; j++) {
@@ -78,6 +84,7 @@ namespace Maze {
         }
 
         public int ElementCount(string[][] jag, string elmt) {
+            // Menghitung jumlah sebuah elemen tertentu dalam sebuah matriks
             int count = 0;
             for (int i=0; i < jag.Length; i++) {
                 for (int j=0; j < jag[i].Length; j++) {
@@ -90,7 +97,8 @@ namespace Maze {
         } 
 
         public bool canMoveRight(MatrixElement[][] mainMatrix, int x, int y) {
-            // return (!(mainMatrix[x][y+1].symbol == "X" || y == mainMatrix[0].Length - 1));
+            // Mengecek apakah program bisa berpindah ke kanan
+            // (syarat: indeks ke kanan tidak out of bounds dan titik sebelah kanan bukan “X”)
             if (y == mainMatrix[0].Length - 1) {
                 return false;
             } else if (mainMatrix[x][y+1].symbol == "X") {
@@ -100,7 +108,8 @@ namespace Maze {
             }
         }
         public bool canMoveLeft(MatrixElement[][] mainMatrix, int x, int y) {
-            // return (!(mainMatrix[x][y-1].symbol == "X" || y == 0));
+            // Mengecek apakah program bisa berpindah ke kiri
+            // (syarat: indeks ke kiri tidak out of bounds dan titik sebelah kiri bukan “X”)
             if (y == 0) {
                 return false;
             } else if (mainMatrix[x][y-1].symbol == "X") {
@@ -110,7 +119,8 @@ namespace Maze {
             }
         }
         public bool canMoveUp(MatrixElement[][] mainMatrix, int x, int y) {
-            // return (!(mainMatrix[x-1][y].symbol == "X" || x == 0));
+            // Mengecek apakah program bisa berpindah ke atas
+            // (syarat: indeks ke atas tidak out of bounds dan titik sebelah atas bukan “X”)
             if (x == 0) {
                 return false;
             } else if (mainMatrix[x-1][y].symbol == "X") {
@@ -120,7 +130,8 @@ namespace Maze {
             }
         }
         public bool canMoveDown(MatrixElement[][] mainMatrix, int x, int y) {
-            // return (!(mainMatrix[x+1][y].symbol == "X" || x == mainMatrix.Length - 1));
+            // Mengecek apakah program bisa berpindah ke bawah
+            // (syarat: indeks ke bawah tidak out of bounds dan titik sebelah bawah bukan “X”)
             if (x == mainMatrix.Length - 1) {
                 return false;
             } else if (mainMatrix[x+1][y].symbol == "X") {
@@ -131,6 +142,7 @@ namespace Maze {
         }
 
         public void ResetMatrix(MatrixElement[][] mainMatrix, bool[,] isVisited) {
+            // Membuat nilai numberOfVisits pada seluruh titik di peta menjadi nol dan membuat nilai elemen pada matriks boolean menjadi false
             for (int i = 0; i < mainMatrix.Length; i++) {
                 for (int j = 0; j < mainMatrix[0].Length; j++) {
                     mainMatrix[i][j].numberOfVisits = 0;
@@ -140,6 +152,7 @@ namespace Maze {
         }
 
         public void resetMainMatrix(MatrixElement[][] mainMatrix) {
+            // Membuat nilai numberOfVisits pada seluruh titik di peta menjadi nol
             for (int i = 0; i < mainMatrix.Length; i++) {
                 for (int j = 0; j < mainMatrix[0].Length; j++) {
                     mainMatrix[i][j].numberOfVisits = 0;
@@ -148,6 +161,7 @@ namespace Maze {
         }
 
         public void ResetBoolMatrix(bool[,] isVisited) {
+            // Membuat nilai elemen pada matriks boolean menjadi false
             for (int i = 0; i < isVisited.GetLength(0); i++) {
                 for (int j = 0; j < isVisited.GetLength(1); j++) {
                     isVisited[i, j] = false;
